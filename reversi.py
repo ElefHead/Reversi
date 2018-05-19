@@ -3,7 +3,7 @@ from os import path
 from pprint import pprint
 import numpy as np 
 
-input_dir = "sample"
+input_dir = "input"
 output_dir = "output"
 
 weights = np.array([[99,-8,8,6,6,8,-8,99],
@@ -317,20 +317,17 @@ def alphabeta(board, depth, max_depth, alpha, beta, player, is_max, mov): #Mov i
 	opponent = "O" if player=="X" else "X"
 	if depth == max_depth or passes==2:
 		value = evaluate(board)
-		print genLog(depth,value,mov,alpha,beta)
 		return value
 	if is_max:
 		value = -1*float("inf")
 		moves = getValidMoves(board,player)
 		if moves==[]:
 			passes = passes+1
-			print genLog(depth,value,mov,alpha,beta)
 			value = max(value,alphabeta(makeMove(np.array(board),"pass",player), depth+1, max_depth,alpha,beta,opponent,False,"pass"))
 			if value>alpha:
 				alpha = value
 		else:
 			for move in moves:
-				print genLog(depth,value,mov,alpha,beta)
 				value = max(value,alphabeta(makeMove(np.array(board),move,player), depth+1, max_depth, alpha, beta, opponent, False, move))
 				if value>alpha:
 					alpha = value
@@ -345,18 +342,15 @@ def alphabeta(board, depth, max_depth, alpha, beta, player, is_max, mov): #Mov i
 		moves = getValidMoves(board,player)		
 		if moves == []:
 			passes = passes + 1
-			print genLog(depth,value,mov,alpha,beta)
 			value = min(value,alphabeta(makeMove(np.array(board),"pass",player),depth+1,max_depth,alpha,beta,opponent,True,"pass"))
 			if value<beta:
 				beta = value
 		else:			
 			for move in moves:
-				print genLog(depth,value,mov,alpha,beta)
 				value = min(value,alphabeta(makeMove(np.array(board),move,player), depth+1, max_depth, alpha, beta,opponent,True, move))
 				beta = min(beta,value)
 				if beta<=alpha:
 					break
-	print genLog(depth,value,mov,alpha,beta)
 	return value
 
 def main():
@@ -373,7 +367,6 @@ def main():
 				for line in r.read().split("\n"):
 					board.append(list(line.strip().replace("*","0").replace("O","1").replace("X","2")))
 				board = np.asarray(board,dtype="int")
-				print("Node,Depth,Value,Alpha,Beta")
 				score = alphabeta(board,0,depth,-1*float("inf"),float("inf"),player,True,None)
 				pprint((score,best_move))
 

@@ -1,5 +1,5 @@
 # Reversi
-Code for finding the next step on reversi using Alpha Beta Pruning
+Code for finding the next step on [reversi](http://en.wikipedia.org/wiki/Reversi) using Alpha Beta Pruning
 
 This was a fun exercise to implement [Alpha-Beta](https://en.wikipedia.org/wiki/Alpha%E2%80%93beta_pruning) pruning algorithm
 to determine the best next play for a given player.  
